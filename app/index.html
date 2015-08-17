@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" ng-app="crmApp">
+<html ng-app="colorApp">
 <head>
   <meta charset="utf-8">
   <title>Angular CRM</title>
@@ -11,9 +11,20 @@
 </head>
 <body>
 
-  <div ng-view>
-    Welcome to Angular CRM
-  </div>
+  <body ng-controller='SearchController'>
+    <input type='text' ng-model='query'>
+    <p ng-show="query">Search result for {{query}}</p>
+    <ul>
+      <li ng-repeat="color in colors | filter:query" ng-style="{color:color.value}">{{color.name}}</li>
+    </ul>
+    <h4>+ Add Colors</h4>
+    <form name="addForm" ng-submit="addColor(colorName, colorValue)" novalidate>
+      <input type='text' placeholder='Color Name' ng-model='colorName' required ng-minlength=3>
+      <input type='text' placeholder='Color Value' ng-model='colorValue' required ng-pattern="/^(#)?([0-9a-fA-F]{3})([0-9a-fA-F]{3})?$">
+      <button type="submit" ng-disabled='addForm.$invalid'>Add</button>
+    </form>
+
+  </body>
 
 </body>
 </html>
